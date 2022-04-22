@@ -38,18 +38,6 @@ RUN chown -R ligross /home/ligross
 USER ligross
 WORKDIR /home/ligross
 
-# # Build MPI from source
-# RUN wget -q https://www.mpich.org/static/downloads/3.3.2/mpich-3.3.2.tar.gz && \
-#     tar -xzf mpich-3.3.2.tar.gz && \
-#     rm mpich-3.3.2.tar.gz
-
-# WORKDIR /home/ligross/mpich-3.3.2
-
-# # configure MPI and build
-# RUN ./configure --disable-fortran
-# RUN make && \
-#     sudo -S make install
-
 RUN mkdir mpi-hello-world
 
 # copy relevant files and set MPICC environment variable
@@ -61,6 +49,7 @@ ENV MPICC /usr/bin/mpicc
 WORKDIR /home/ligross/mpi-hello-world
 RUN make mpi_hello_world
 RUN mpiexec --hostfile hostfile -n 9 ./mpi_hello_world
+
 # RUN mpirun --hostfile hostfile -np 8 ./mpi_hello_world
 # # ask for 99, sure, ask for 100 nope
 # # HOSTFILE?
