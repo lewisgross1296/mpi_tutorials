@@ -49,10 +49,12 @@ RUN cd .. && \
 # copy relevant files and set MPICC environment variable
 COPY mpi_hello_world.c /home/ligross/mpi-hello-world
 COPY Makefile /home/ligross/mpi-hello-world
+COPY hostfile /home/ligross/mpi-hello-world
 ENV MPICC /usr/local/bin/mpicc
 
 WORKDIR /home/ligross/mpi-hello-world
 RUN make mpi_hello_world
-RUN mpirun -np 99 ./mpi_hello_world
+# RUN mpiexec -n 100 ./mpi_hello_world
+RUN mpirun --hostfile hostfile -np 8 ./mpi_hello_world
 # ask for 99, sure, ask for 100 nope
 # HOSTFILE?
